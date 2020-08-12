@@ -1,21 +1,19 @@
 #!groovy
 
 pipeline {
-    agent any
-
-    triggers {
-        pollSCM('H/5 * * * *')
-    }
+    agent none
 
     stages {
-        stage('Build') {
+        stage('Build & Test app') {
             steps {
-                sh './gradlew assemble'
+                echo "Start building application"
+                sh './gradlew clean build'
             }
         }
 
         stage('Test') {
             steps {
+                echo 'Start testing application'
                 sh './gradlew test'
             }
         }
