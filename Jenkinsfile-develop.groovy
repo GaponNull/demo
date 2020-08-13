@@ -4,6 +4,11 @@ pipeline {
     agent any
 
     stages {
+        stage('clean_workspace_and_checkout_source') {
+            steps {
+                sh "docker-machine rm default"
+            }
+        }
         stage('Build app') {
             agent {
                 dockerfile {
