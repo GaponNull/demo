@@ -3,18 +3,36 @@
 pipeline {
     agent any
 
+    triggers {
+        pollSCM '* * * * *'
+    }
+
+    options {
+        disableConcurrentBuilds()
+    }
+
     stages {
-        stage('Build app') {
+        stage('Cleanup') {
             steps {
-                print "Start building application"
-                sh './gradlew clean build'
+                sh './gradlew clean'
+            }
+        }
+
+        stage('PWD, Sonar rules, Code coverage') {
+            steps {
+                echo 'will add later'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Start testing application'
                 sh './gradlew test'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh './gradlew build'
             }
         }
     }
