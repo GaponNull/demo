@@ -32,7 +32,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 912601565515.dkr.ecr.eu-central-1.amazonaws.com'
+                sh 'aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 912601565515.dkr.ecr.eu-central-1.amazonaws.com/hrs-configuration-service:latest'
                 sh 'docker build -t hrs-configuration-service --network=host . '
             }
         }
