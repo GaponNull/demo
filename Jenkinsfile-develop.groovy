@@ -32,7 +32,15 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh './gradlew build'
+                sh 'aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 912601565515.dkr.ecr.eu-central-1.amazonaws.com'
+                sh 'docker build -t hrs-configuration-service --network=host . '
+            }
+        }
+
+        stage('Push to ECR') {
+            steps {
+                sh 'docker tag hrs-configuration-service:latest 912601565515.dkr.ecr.eu-central-1.amazonaws.com/hrs-configuration-service:latest'
+                sh 'docker push 912601565515.dkr.ecr.eu-central-1.amazonaws.com/hrs-configuration-service:latest'
             }
         }
     }
