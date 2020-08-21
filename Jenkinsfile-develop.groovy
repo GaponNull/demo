@@ -32,10 +32,11 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'docker build -t hrs-configuration-service .'
+
 
                 script {
                     docker.withRegistry("912601565515.dkr.ecr.eu-central-1.amazonaws.com/hrs-configuration-service:latest") {
+                        def dockerImage = docker.build("hrs-configuration-service")
                         dockerImage.push()
                     }
                 }
